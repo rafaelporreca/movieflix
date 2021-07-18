@@ -1,9 +1,7 @@
 package br.com.rafaelporreca.movieflix.servicies;
 
-import br.com.rafaelporreca.movieflix.dto.UserDTO;
 import br.com.rafaelporreca.movieflix.entities.User;
 import br.com.rafaelporreca.movieflix.repositories.UserRepository;
-import br.com.rafaelporreca.movieflix.servicies.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -39,12 +35,5 @@ public class UserService implements UserDetailsService {
         }
         logger.info("User found: " + userName);
         return user;
-    }
-
-    public UserDTO findById(Long id) {
-        authService.validateSelfOrAdmin(id);
-        Optional<User> obj = userRepository.findById(id);
-        User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-        return new UserDTO(entity);
     }
 }

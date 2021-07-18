@@ -1,6 +1,12 @@
 package br.com.rafaelporreca.movieflix.dto;
 
 import br.com.rafaelporreca.movieflix.entities.Movie;
+import br.com.rafaelporreca.movieflix.entities.Review;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MovieDTO {
 
@@ -10,7 +16,8 @@ public class MovieDTO {
     private Integer year;
     private String imgUrl;
     private String synopsis;
-    private GenreDTO genreDto;
+    private Long genreId;
+    private List<ReviewDTO> reviews = new ArrayList<>();
 
     public MovieDTO() {
     }
@@ -30,7 +37,12 @@ public class MovieDTO {
         year = obj.getYear();
         imgUrl = obj.getImgUrl();
         synopsis = obj.getSynopsis();
-        genreDto = new GenreDTO(obj.getGenre());
+        genreId = obj.getGenre().getId();
+    }
+
+    public MovieDTO(Movie obj, Set<Review> list) {
+        this(obj);
+        reviews = list.stream().map(review ->new ReviewDTO(review)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -57,7 +69,11 @@ public class MovieDTO {
         return synopsis;
     }
 
-    public GenreDTO getGenreDto() {
-        return genreDto;
+    public Long getGenreId() {
+        return genreId;
+    }
+
+    public List<ReviewDTO> getReviews() {
+        return reviews;
     }
 }

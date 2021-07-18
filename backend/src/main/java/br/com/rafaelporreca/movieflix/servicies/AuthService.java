@@ -27,11 +27,4 @@ public class AuthService {
             throw new UnauthorizedException("Invalid user");
         }
     }
-
-    public void validateSelfOrAdmin(Long userId){
-        User user = authenticated();
-        if(!user.getId().equals(userId) && !user.hasRole("ROLE_ADMIN")){
-            throw new ForbiddenException("Access denid");
-        }
-    }
 }
