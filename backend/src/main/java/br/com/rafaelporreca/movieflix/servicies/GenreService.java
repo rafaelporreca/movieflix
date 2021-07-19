@@ -5,6 +5,7 @@ import br.com.rafaelporreca.movieflix.entities.Genre;
 import br.com.rafaelporreca.movieflix.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class GenreService {
         this.repository = repository;
     }
 
+    @Transactional(readOnly = true)
     public List<GenreDTO> listAllGenre(){
         List<GenreDTO> listDto = new ArrayList<>();
         List<Genre> list = repository.findAll();
